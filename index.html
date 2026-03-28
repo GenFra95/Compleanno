@@ -91,15 +91,16 @@ section { padding:30px 15px; max-width:600px; margin:auto; }
   padding:12px 18px;
   border-radius:30px;
   cursor:pointer;
-  margin:6px 0;
+  margin:8px 0;
   display:block;
   width:100%;
   text-align:center;
   font-size:1rem;
+  text-decoration:none;
 }
 
-.btn-primary { background: var(--primary); color:white; text-decoration:none; }
-.btn-secondary { border:1px solid #ccc; color:#333; text-decoration:none; }
+.btn-primary { background: var(--primary); color:white; }
+.btn-secondary { border:1px solid #ccc; color:#333; background:white; }
 
 /* CONFETTI */
 .confetti {
@@ -127,6 +128,15 @@ section { padding:30px 15px; max-width:600px; margin:auto; }
   padding:20px;
 }
 .thankyou.show{ opacity:1; }
+
+/* MOBILE SPECIFIC */
+@media(max-width:600px){
+  header h1 { font-size:2rem; }
+  header .date { font-size:1.5rem; }
+  header #countdown { font-size:1.2rem; }
+  .card { padding:15px; }
+  .btn { font-size:1.1rem; }
+}
 </style>
 </head>
 
@@ -145,7 +155,7 @@ section { padding:30px 15px; max-width:600px; margin:auto; }
 
 <header>
   <div>
-    <h1>Maria's 30 Birthday</h1>
+    <h1>Maria's 30 Birthday 🎉</h1>
     <div class="date">23 Maggio 2026 • Ore 13:00</div>
     <div id="countdown"></div>
   </div>
@@ -219,7 +229,7 @@ function rsvp(e){
   showThankYou();
   let msg=`Ciao Maria! Sono ${nome} e ci sarò 🎉. Intolleranze: ${intolleranze}`;
   setTimeout(()=>{
-    window.open("https://wa.me/393318697065?text="+encodeURIComponent(msg));
+    window.open("https://wa.me/393XXXXXXXXX?text="+encodeURIComponent(msg));
   },1000);
 }
 

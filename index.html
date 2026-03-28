@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maria's 30 Birthday</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --primary:#0ea5a4;
+      --dark:#0f172a;
+    }
+
+    *{box-sizing:border-box}
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      color: #333;
+      background: #f8f9fb;
+      overflow-x:hidden;
+    }
+
+    /* ================= INVITATION INTRO ================= */
+    .intro {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg,#0f172a,#1e293b);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+      perspective: 1200px;
+    }
+
+    .card-invite {
+      width: 320px;
+      height: 200px;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 1.2s ease;
+      cursor: pointer;
+    }
+
+    .card-invite.open {
+      transform: rotateX(-120deg);
+    }
+
+    .card-front, .card-inside {
+      position: absolute;
+      inset: 0;
+      border-radius: 12px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      backface-visibility:hidden;
+    }
+
+    .card-front {
+      background: white;
+      color:#111;
+      font-family: 'Playfair Display', serif;
+      font-size:1.4rem;
+      box-shadow:0 10px 40px rgba(0,0,0,0.3);
+    }
+
+    .card-inside {
+      background: #0ea5a4;
+      color:white;
+      transform: rotateX(180deg);
+      font-size:1rem;
+      text-align:center;
+      padding:20px;
+    }
+
+    .hint {
+      position:absolute;
+      bottom:40px;
+      color:#cbd5f5;
+      font-size:0.9rem;
+      opacity:0.8;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse{
+      0%,100%{opacity:0.4}
+      50%{opacity:1}
+    }
+
+    .intro.hidden{
+      opacity:0;
+      pointer-events:none;
+      transition: opacity 1s ease;
+    }
+
+    /* ================= MAIN SITE ================= */
+
+    header {
+      height: 100vh;
+      background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+        url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e');
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+    }
+
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      font-size: 1.2rem;
+    }
+
+    section {
+      padding: 60px 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      margin-bottom: 30px;
+      transform: translateY(40px);
+      opacity:0;
+      transition: all .8s ease;
+    }
+
+    .card.visible{
+      transform: translateY(0);
+      opacity:1;
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      margin-bottom: 15px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 20px;
+      border-radius: 30px;
+      text-decoration: none;
+      margin-top: 15px;
+      transition: 0.3s;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #0b8a89;
+    }
+
+    .btn-secondary {
+      border: 1px solid #ccc;
+      color: #333;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9rem;
+      color: #777;
+    }
+
+    .countdown {
+      font-size: 1.5rem;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- INTRO ANIMATION -->
+<div class="intro" id="intro">
+  <div class="card-invite" id="inviteCard">
+    <div class="card-front">Apri il tuo invito ✨</div>
+    <div class="card-inside">Maria's 30 Birthday 🎉</div>
+  </div>
+  <div class="hint">tocca per aprire</div>
+</div>
+
+<header>
+  <div>
+    <h1>Maria's 30 Birthday 🎉</h1>
+    <p>23 Maggio 2026 • Pranzo al porto</p>
+    <div class="countdown" id="countdown"></div>
+  </div>
+</header>
+
+<section>
+  <div class="card">
+    <h2>✨ Ti invito a festeggiare con me</h2>
+    <p>
+      Un pranzo speciale per celebrare i miei 30 anni in una location unica sul mare.
+      Sarà un momento rilassato, elegante e pieno di sorrisi.
+    </p>
+  </div>
+
+  <div class="card">
+    <h2>📍 Location</h2>
+    <p>Seashell – Porto turistico</p>
+    <a href="https://www.seashell.it/" target="_blank" class="btn btn-primary">Scopri la location</a>
+  </div>
+
+  <div class="card">
+    <h2>✅ Conferma partecipazione</h2>
+    <p>Fammi sapere se ci sarai 😊</p>
+    <a href="#" class="btn btn-primary">Ci sarò</a>
+    <a href="#" class="btn btn-secondary">Non posso</a>
+  </div>
+</section>
+
+<footer>
+  Con amore 💙 Maria
+</footer>
+
+<script>
+  const countdown = document.getElementById('countdown');
+  const eventDate = new Date('May 23, 2026 13:00:00').getTime();
+
+  setInterval(() => {
+    const now = new Date().getTime();
+    const diff = eventDate - now;
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+
+    countdown.innerHTML = `${days} giorni • ${hours}h ${minutes}m`;
+  }, 1000);
+
+  // INVITE OPEN ANIMATION
+  const card = document.getElementById('inviteCard');
+  const intro = document.getElementById('intro');
+
+  card.addEventListener('click', () => {
+    card.classList.add('open');
+
+    setTimeout(() => {
+      intro.classList.add('hidden');
+      document.body.style.overflow = 'auto';
+    }, 1200);
+  });
+
+  // SCROLL ANIMATION
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+      }
+    });
+  });
+
+  document.querySelectorAll('.card').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

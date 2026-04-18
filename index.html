@@ -7,40 +7,44 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
-
-  body{
-    font-family:'Inter',sans-serif;
-    background:#f8f9fb;
-    min-height:100vh;
-  }
+  body{font-family:'Inter',sans-serif;background:#f8f9fb;min-height:100vh}
 
   /* INTRO */
   #intro{
     position:fixed;inset:0;z-index:100;
-    background:linear-gradient(160deg,#0f172a 0%,#1a2744 60%,#0d1f3c 100%);
-    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;
+    background:radial-gradient(ellipse at 60% 30%, #8a7f76 0%, #6b6059 40%, #4a4039 100%);
     transition:opacity 0.9s ease;
   }
   #intro.gone{opacity:0;pointer-events:none}
-  .stars{position:absolute;inset:0;overflow:hidden;pointer-events:none}
-  .star{position:absolute;width:2px;height:2px;background:white;border-radius:50%;animation:twinkle var(--d,3s) infinite}
-  @keyframes twinkle{0%,100%{opacity:0.2}50%{opacity:1}}
 
-  .envelope{width:220px;height:140px;cursor:pointer;filter:drop-shadow(0 8px 32px rgba(99,102,241,0.4));transition:transform 0.2s}
-  .envelope:hover{transform:scale(1.04) translateY(-3px)}
+  /* particelle dorate sottili */
+  #intro canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+
+  .invite-txt{
+    position:relative;z-index:2;
+    font-family:'Playfair Display',Georgia,serif;
+    font-size:1.1rem;color:#f5ede0;
+    letter-spacing:0.1em;text-align:center;
+    text-shadow:0 1px 12px rgba(0,0,0,0.35);
+    pointer-events:none;
+  }
+  .hint{
+    position:relative;z-index:2;
+    font-size:11px;color:rgba(245,237,224,0.45);
+    letter-spacing:0.18em;text-transform:uppercase;
+    animation:pulse 2s infinite;pointer-events:none;
+  }
+  @keyframes pulse{0%,100%{opacity:0.3}50%{opacity:1}}
+
+  svg.env{
+    position:relative;z-index:2;
+    width:160px;height:103px;
+    filter:drop-shadow(0 6px 28px rgba(0,0,0,0.35));
+    cursor:pointer;
+  }
   .env-flap{transform-origin:50% 0%;transition:transform 0.8s cubic-bezier(.4,0,.2,1)}
   .env-flap.open{transform:rotateX(-180deg)}
-
-  .letter{
-    position:absolute;top:12px;left:50%;transform:translateX(-50%);
-    width:176px;background:white;border-radius:6px;padding:10px 12px;
-    text-align:center;font-size:11px;color:#3730a3;line-height:1.5;
-    opacity:0;transition:opacity 0.4s 0.5s,top 0.8s 0.3s cubic-bezier(.4,0,.2,1);
-  }
-  .letter.show{opacity:1;top:-30px}
-  .letter strong{display:block;font-size:13px;color:#1e1b4b;margin-bottom:2px}
-  .hint-text{color:#94a3b8;font-size:13px;letter-spacing:0.05em;animation:pulse2 2s infinite}
-  @keyframes pulse2{0%,100%{opacity:0.4}50%{opacity:1}}
 
   /* MAIN */
   #main{display:none;flex-direction:column}
@@ -64,7 +68,6 @@
     font-family:'Playfair Display',Georgia,serif;font-size:1.3rem;color:white;font-weight:600;
   }
 
-  /* COUNTDOWN */
   .countdown-bar{
     background:#1e293b;color:white;
     display:grid;grid-template-columns:repeat(3,1fr);
@@ -74,27 +77,21 @@
   .cdown-num{font-size:1.6rem;font-weight:500}
   .cdown-label{font-size:10px;opacity:0.5;letter-spacing:0.1em;text-transform:uppercase;margin-top:2px}
 
-  /* CONTENT */
   .content{padding:16px;display:flex;flex-direction:column;gap:12px;max-width:600px;margin:0 auto;width:100%}
 
   .card{
-    background:white;
-    border:0.5px solid #e2e8f0;
-    border-radius:16px;
-    padding:18px 20px;
+    background:white;border:0.5px solid #e2e8f0;
+    border-radius:16px;padding:18px 20px;
     box-shadow:0 2px 12px rgba(0,0,0,0.04);
   }
-  .card-icon{font-size:22px;margin-bottom:8px}
   .card h3{font-size:15px;font-weight:500;color:#1e293b;margin-bottom:6px}
   .card p{font-size:13px;color:#64748b;line-height:1.65}
 
-  /* LOCATION */
   .location-row{display:flex;align-items:flex-start;gap:12px;margin-top:12px}
   .loc-icon{width:38px;height:38px;border-radius:50%;background:#eff6ff;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;margin-top:2px}
   .loc-info{font-size:13px;color:#1e293b;line-height:1.55}
   .loc-info small{display:block;color:#64748b;font-size:12px;margin-top:1px}
 
-  /* BUTTONS */
   .btn{
     display:block;width:100%;padding:13px 16px;border-radius:30px;
     font-size:14px;font-weight:500;cursor:pointer;border:none;
@@ -108,23 +105,17 @@
   .btn-primary{background:#1e293b;color:white}
   .btn-secondary{background:#f1f5f9;color:#475569;border:0.5px solid #e2e8f0}
 
-  /* RSVP FORM */
   .rsvp-form{display:none;flex-direction:column;gap:10px;margin-top:12px}
   .rsvp-form.open{display:flex}
   .rsvp-form input,
   .rsvp-form textarea{
     width:100%;padding:11px 14px;border-radius:10px;
     font-size:14px;font-family:'Inter',sans-serif;
-    border:1px solid #e2e8f0;
-    background:#f8fafc;
-    color:#1e293b;resize:none;
-    -webkit-appearance:none;appearance:none;
-    outline:none;
+    border:1px solid #e2e8f0;background:#f8fafc;color:#1e293b;
+    resize:none;-webkit-appearance:none;appearance:none;outline:none;
   }
-  .rsvp-form input:focus,
-  .rsvp-form textarea:focus{border-color:#6366f1;background:white}
+  .rsvp-form input:focus,.rsvp-form textarea:focus{border-color:#9c8c7c;background:white}
 
-  /* SUCCESS */
   .success-msg{
     display:none;align-items:center;gap:10px;padding:14px;
     background:#f0fdf4;border:0.5px solid #86efac;
@@ -132,7 +123,6 @@
   }
   .success-msg.show{display:flex}
 
-  /* CONFETTI */
   .confetti-piece{
     position:fixed;top:-10px;pointer-events:none;z-index:9999;
     animation:cffall var(--dur,3s) linear forwards;border-radius:2px;
@@ -149,19 +139,18 @@
 
 <!-- INTRO -->
 <div id="intro">
-  <div class="stars" id="stars"></div>
-  <svg class="envelope" id="env" viewBox="0 0 220 140" xmlns="http://www.w3.org/2000/svg" onclick="openEnvelope()">
-    <rect fill="#e0e7ff" x="0" y="4" width="216" height="132" rx="8"/>
-    <polygon fill="#c7d2fe" points="0,136 108,72 216,136"/>
-    <polygon class="env-flap" id="flap" fill="#c7d2fe" points="0,4 216,4 108,76"/>
-    <line x1="0" y1="136" x2="108" y2="72" stroke="#a5b4fc" stroke-width="0.5"/>
-    <line x1="216" y1="136" x2="108" y2="72" stroke="#a5b4fc" stroke-width="0.5"/>
+  <canvas id="dust"></canvas>
+  <div class="invite-txt">c'è un invito per te</div>
+  <svg class="env" id="env" viewBox="0 0 160 103">
+    <rect fill="#fdf6e3" x="0" y="3" width="160" height="97" rx="7"/>
+    <polygon fill="#f5e6c0" points="0,100 80,54 160,100"/>
+    <polygon class="env-flap" id="flap" fill="#f5e6c0" points="0,3 160,3 80,56"/>
+    <line x1="0" y1="100" x2="80" y2="54" stroke="#d4a847" stroke-width="0.6"/>
+    <line x1="160" y1="100" x2="80" y2="54" stroke="#d4a847" stroke-width="0.6"/>
+    <circle cx="80" cy="54" r="8" fill="#d4a847" opacity="0.95"/>
+    <text x="80" y="58" text-anchor="middle" font-size="8" fill="#7a5c10" font-family="Georgia">✦</text>
   </svg>
-  <div class="letter" id="letter">
-    <strong>Maria's 30th Birthday</strong>
-    23 Maggio 2026 · Ore 13:00<br>Seashell Restaurant, Manfredonia
-  </div>
-  <p class="hint-text">tocca la busta per aprire</p>
+  <div class="hint">tocca per aprire</div>
 </div>
 
 <!-- MAIN -->
@@ -176,24 +165,15 @@
   </div>
 
   <div class="countdown-bar">
-    <div class="cdown-item">
-      <div class="cdown-num" id="cd-d">—</div>
-      <div class="cdown-label">giorni</div>
-    </div>
-    <div class="cdown-item">
-      <div class="cdown-num" id="cd-h">—</div>
-      <div class="cdown-label">ore</div>
-    </div>
-    <div class="cdown-item">
-      <div class="cdown-num" id="cd-m">—</div>
-      <div class="cdown-label">minuti</div>
-    </div>
+    <div class="cdown-item"><div class="cdown-num" id="cd-d">—</div><div class="cdown-label">giorni</div></div>
+    <div class="cdown-item"><div class="cdown-num" id="cd-h">—</div><div class="cdown-label">ore</div></div>
+    <div class="cdown-item"><div class="cdown-num" id="cd-m">—</div><div class="cdown-label">minuti</div></div>
   </div>
 
   <div class="content">
 
     <div class="card">
-      <div class="card-icon">✨</div>
+      <div style="font-size:20px;margin-bottom:8px">✨</div>
       <h3>Sei invitato/a</h3>
       <p>Un pranzo speciale vista mare per festeggiare insieme i miei 30 anni, tra risate, buon cibo e tanti brindisi!</p>
     </div>
@@ -236,92 +216,113 @@
 </div>
 
 <script>
-  // ⚠️ SOSTITUISCI con il numero reale di Maria (formato internazionale, senza +)
+  // ⚠️ SOSTITUISCI con il numero reale di Maria (formato internazionale senza +)
   // Esempio: '393331234567'
-  const WA_NUMBER = '393347344424';
+  const WA_NUMBER = '393XXXXXXXXX';
 
-  const COLORS = ['#6366f1','#f43f5e','#fbbf24','#34d399','#818cf8','#fb7185','#a78bfa'];
+  const CONFETTI_COLORS = ['#9c8c7c','#c8a87a','#e8d5b0','#b09080','#d4a847','#a09080'];
 
-  // Stelle intro
-  (function makeStars(){
-    const c = document.getElementById('stars');
-    for(let i = 0; i < 60; i++){
-      const s = document.createElement('div');
-      s.className = 'star';
-      s.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;--d:${2+Math.random()*4}s;animation-delay:${Math.random()*4}s`;
-      c.appendChild(s);
-    }
-  })();
+  /* ---- particelle dorate sottili ---- */
+  const dust = document.getElementById('dust');
+  const dctx = dust.getContext('2d');
+  let DW, DH, particles = [];
 
-  // Apri busta
-  let envOpened = false;
-  function openEnvelope(){
-    if(envOpened) return;
-    envOpened = true;
-    document.getElementById('flap').classList.add('open');
-    setTimeout(() => document.getElementById('letter').classList.add('show'), 400);
-    setTimeout(() => {
-      document.getElementById('intro').classList.add('gone');
-      const m = document.getElementById('main');
-      m.classList.add('visible');
-      startCountdown();
-    }, 1600);
+  function resizeDust() {
+    DW = dust.width = window.innerWidth;
+    DH = dust.height = window.innerHeight;
   }
 
-  // Countdown
-  function startCountdown(){
+  function makeParticles() {
+    particles = [];
+    for (let i = 0; i < 48; i++) {
+      particles.push({
+        x: Math.random() * DW,
+        y: Math.random() * DH,
+        r: 0.4 + Math.random() * 1.1,
+        vx: (Math.random() - 0.5) * 0.12,
+        vy: -0.05 - Math.random() * 0.1,
+        a: 0.1 + Math.random() * 0.4,
+        da: 0.002 + Math.random() * 0.004,
+        gold: Math.random() > 0.4,
+      });
+    }
+  }
+
+  function drawDust() {
+    dctx.clearRect(0, 0, DW, DH);
+    particles.forEach(p => {
+      p.x += p.vx; p.y += p.vy; p.a += p.da;
+      if (p.a > 0.45 || p.a < 0.06) p.da *= -1;
+      if (p.y < -4) p.y = DH + 4;
+      if (p.x < -4) p.x = DW + 4;
+      if (p.x > DW + 4) p.x = -4;
+      dctx.globalAlpha = p.a;
+      dctx.fillStyle = p.gold ? '#c8a85a' : 'rgba(245,237,224,0.7)';
+      dctx.beginPath();
+      dctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      dctx.fill();
+    });
+    dctx.globalAlpha = 1;
+    requestAnimationFrame(drawDust);
+  }
+
+  resizeDust(); makeParticles(); drawDust();
+  window.addEventListener('resize', () => { resizeDust(); makeParticles(); });
+
+  /* ---- apertura busta ---- */
+  let envOpened = false;
+  document.getElementById('env').addEventListener('click', function () {
+    if (envOpened) return;
+    envOpened = true;
+    document.getElementById('flap').classList.add('open');
+    setTimeout(() => {
+      document.getElementById('intro').classList.add('gone');
+      document.getElementById('main').classList.add('visible');
+      startCountdown();
+    }, 900);
+  });
+
+  /* ---- countdown ---- */
+  function startCountdown() {
     const target = new Date('May 23, 2026 13:00:00').getTime();
-    function tick(){
+    function tick() {
       const diff = target - Date.now();
-      if(diff <= 0){
-        ['d','h','m'].forEach(k => document.getElementById('cd-'+k).textContent = '0');
-        return;
-      }
+      if (diff <= 0) { ['d','h','m'].forEach(k => document.getElementById('cd-'+k).textContent = '0'); return; }
       document.getElementById('cd-d').textContent = Math.floor(diff / 86400000);
       document.getElementById('cd-h').textContent = Math.floor((diff % 86400000) / 3600000);
       document.getElementById('cd-m').textContent = Math.floor((diff % 3600000) / 60000);
     }
-    tick();
-    setInterval(tick, 30000);
+    tick(); setInterval(tick, 30000);
   }
 
-  // Coriandoli
-  function confetti(){
-    for(let i = 0; i < 80; i++){
+  /* ---- coriandoli ---- */
+  function confetti() {
+    for (let i = 0; i < 80; i++) {
       const el = document.createElement('div');
       el.className = 'confetti-piece';
       const size = 6 + Math.random() * 6;
-      el.style.cssText = `left:${Math.random()*100}%;width:${size}px;height:${size}px;background:${COLORS[i%COLORS.length]};--dur:${2+Math.random()*2.5}s;animation-delay:${Math.random()*0.8}s`;
+      el.style.cssText = `left:${Math.random()*100}%;width:${size}px;height:${size}px;background:${CONFETTI_COLORS[i%CONFETTI_COLORS.length]};--dur:${2+Math.random()*2.5}s;animation-delay:${Math.random()*0.8}s`;
       document.body.appendChild(el);
       setTimeout(() => el.remove(), 4000);
     }
   }
 
-  // WhatsApp link — apre l'app se installata, altrimenti web
-  function waLink(msg){
-    return 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg);
-  }
+  /* ---- helpers ---- */
+  function goTo(url) { window.open(url, '_blank'); }
+  function waLink(msg) { return 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg); }
 
-  // Apri link esterno
-  function goTo(url){
-    window.open(url, '_blank');
-  }
-
-  // Form RSVP
-  function toggleForm(show){
+  function toggleForm(show) {
     document.getElementById('rsvp-form').classList.toggle('open', show);
     document.getElementById('rsvp-btns').style.display = show ? 'none' : 'block';
   }
-
-  function cancelForm(){
+  function cancelForm() {
     toggleForm(false);
     document.getElementById('f-nome').value = '';
     document.getElementById('f-note').value = '';
   }
-
-  function sendRsvp(){
+  function sendRsvp() {
     const nome = document.getElementById('f-nome').value.trim();
-    if(!nome){ document.getElementById('f-nome').focus(); return; }
+    if (!nome) { document.getElementById('f-nome').focus(); return; }
     const note = document.getElementById('f-note').value.trim();
     confetti();
     document.getElementById('rsvp-form').style.display = 'none';
@@ -329,10 +330,8 @@
     const msg = 'Ciao Maria! Sono ' + nome + ' e ci sarò al tuo compleanno 🎉' + (note ? '. Intolleranze: ' + note : '');
     setTimeout(() => window.open(waLink(msg), '_blank'), 900);
   }
-
-  function sayNo(){
-    const msg = 'Ciao Maria, purtroppo non potrò esserci al tuo compleanno. Mi dispiace tanto! Buon compleanno comunque 🎂';
-    window.open(waLink(msg), '_blank');
+  function sayNo() {
+    window.open(waLink('Ciao Maria, purtroppo non potrò esserci al tuo compleanno. Mi dispiace tanto! Buon compleanno comunque 🎂'), '_blank');
   }
 </script>
 
